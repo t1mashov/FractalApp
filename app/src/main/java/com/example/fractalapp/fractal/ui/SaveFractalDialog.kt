@@ -1,5 +1,6 @@
 package com.example.fractalapp.fractal.ui
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +35,8 @@ import com.example.fractalapp.ui.theme.*
 @Composable
 fun SaveFractalDialog(
     onDismiss: () -> Unit,
-    vm: FractalViewModel?
+    vm: FractalViewModel?,
+    ctx: Context
 ) {
 
     Dialog(onDismissRequest = { onDismiss() }) {
@@ -111,7 +113,7 @@ fun SaveFractalDialog(
 
                     Button(
                         onClick = {
-                            vm.saveFractal()
+                            vm.saveFractal(ctx)
                             onDismiss()
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -136,6 +138,7 @@ fun SaveFractalDialogPreview() {
     val ctx = LocalContext.current
     SaveFractalDialog(
         onDismiss = {},
-        vm = null
+        vm = null,
+        ctx = ctx
     )
 }

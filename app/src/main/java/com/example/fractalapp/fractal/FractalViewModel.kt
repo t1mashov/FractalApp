@@ -1,6 +1,8 @@
 package com.example.fractalapp.fractal
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
@@ -15,6 +17,7 @@ import com.example.fractalapp.fractal.model.FractalRobot
 import com.example.fractalapp.fractal.model.FractalRules
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FractalViewModel(
 
@@ -115,23 +118,27 @@ class FractalViewModel(
         blueChannel.value = 0f
     }
 
-    fun saveFractal() {
-        viewModelScope.launch(Dispatchers.IO) {
-            fractalImage.value?.let {
-                repository.addFractal(Fractal(
-                    title = fractalName.value.ifEmpty { "${System.currentTimeMillis()}" },
-                    icon = (BitmapConverter.fromBitmap(it))!!,
-                    rules = rules.value,
-                    axiom = axiom.value,
-                    angle = angle.value,
-                    gens = gens.value,
-                    step = step.value,
-                    useColors = useColors.value,
-                    redChannel = redChannel.value.toInt(),
-                    greenChannel = greenChannel.value.toInt(),
-                    blueChannel = blueChannel.value.toInt(),
-                ))
+    fun saveFractal(ctx: Context) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                fractalImage.value?.let {
+                    repository.addFractal(Fractal(
+                        title = fractalName.value.ifEmpty { Fractal.defaultName() },
+                        icon = (BitmapConverter.fromBitmap(it))!!,
+                        rules = rules.value,
+                        axiom = axiom.value,
+                        angle = angle.value,
+                        gens = gens.value,
+                        step = step.value,
+                        useColors = useColors.value,
+                        redChannel = redChannel.value.toInt(),
+                        greenChannel = greenChannel.value.toInt(),
+                        blueChannel = blueChannel.value.toInt(),
+                    ))
+                }
             }
+
+            Toast.makeText(ctx, "Фрактал сохранен в избранное", Toast.LENGTH_SHORT).show()
         }
     }
 

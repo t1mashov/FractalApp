@@ -1,5 +1,7 @@
 package com.example.fractalapp.fractal.ui
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,15 +42,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun FractalScreen(
     vm: FractalViewModel,
-    app: AppFractal?,
+    app: AppFractal?
 ) {
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
+    val ctx = LocalContext.current
 
     val canLoad = remember { mutableStateOf(true)}
     if (canLoad.value) {
-        println("loading")
         LaunchedEffect(Unit) {
             vm.loadFractal()
             canLoad.value = false
@@ -71,7 +74,8 @@ fun FractalScreen(
         if (vm.canShowDialog()) {
             SaveFractalDialog(
                 onDismiss = { vm.disableDialog() },
-                vm = vm
+                vm = vm,
+                ctx = ctx
             )
         }
 

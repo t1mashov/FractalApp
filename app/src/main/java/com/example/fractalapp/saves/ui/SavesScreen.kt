@@ -1,5 +1,6 @@
 package com.example.fractalapp.saves.ui
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -49,12 +51,13 @@ fun SavesScreen(
     navHostController: NavHostController
 ) {
 
-    val fractals by
-        vm.fractalListViewModel.fractals.observeAsState(initial = emptyList())
-
     val selection = remember { vm.fractalListViewModel.isSelectionExists() }
     
     val selectedFractalName = remember { vm.fractalListViewModel.selectedFractalName }
+
+    val ctx = LocalContext.current
+
+    val fractals by vm.fractalListViewModel.fractals.observeAsState()
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -65,150 +68,133 @@ fun SavesScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
     ) {
-        if (fractals.isEmpty()) {
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(
-                text = "Нет сохраненных фракталов",
-                style = TextStyle(
-                    fontFamily = FontFamily(
-                        Font(R.font.montserrat_regular)
-                    ),
-                    fontSize = 20.sp,
-                    color = WidgetText
-                )
-            )
-        }
-        else {
 
-            AnimatedVisibility(visible = vm.fractalListViewModel.isSelected.value) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-//                        .background(color = BottomPanel)
-                        .padding(start = 30.dp, end = 30.dp, top = 20.dp, bottom = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clickable(
-                                indication = rememberRipple(color = Color.White),
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                vm.deleteSelectedFromLiked()
-                            },
-                        imageVector = ImageVector.vectorResource(R.drawable.trash),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(Controllers)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Input(
-                        modifier = Modifier.weight(1f),
-                        value = selectedFractalName, 
-                        placeholder = "Название"
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Image(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clickable {
-                                vm.updateSelectedLiked()
-                            },
-                        imageVector = ImageVector.vectorResource(R.drawable.ok),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(Controllers)
-                    )
-                }
-            }
-
-            Box(
+        AnimatedVisibility(visible = vm.fractalListViewModel.isSelected.value) {
+            Row(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 30.dp)
+                    .fillMaxWidth()
+                    .padding(start = 30.dp, end = 30.dp, top = 20.dp, bottom = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Image(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable(
+                            indication = rememberRipple(color = Color.White),
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            vm.deleteSelectedFromLiked()
+                            Toast
+                                .makeText(ctx, "Фрактал удален", Toast.LENGTH_SHORT)
+                                .show()
+                        },
+                    imageVector = ImageVector.vectorResource(R.drawable.trash),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Controllers)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Input(
+                    modifier = Modifier.weight(1f),
+                    value = selectedFractalName,
+                    placeholder = "Название"
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Image(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable {
+                            vm.updateSelectedLiked()
+                            Toast
+                                .makeText(ctx, "Изменения применены", Toast.LENGTH_SHORT)
+                                .show()
+                        },
+                    imageVector = ImageVector.vectorResource(R.drawable.ok),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Controllers)
+                )
+            }
+        }
 
-                vm.fractalListViewModel.getFractalList()?.let { fractals ->
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 30.dp)
+        ) {
 
-//                    LazyVerticalGrid(
-//                        modifier = Modifier
-//                            .padding(start=25.dp, end=25.dp, top=25.dp),
-//                        columns = GridCells.Fixed(2),
-//                        horizontalArrangement = Arrangement.SpaceBetween
-//                    ) {
-//                        items(
-//                            items = it,
-//                            key = { item -> item.id }
-//                        ) {
-//                            FractalWidget(
-//                                it,
-//                                navHostController,
-//                                vm.fractalListViewModel,
-//                                modifier = Modifier
-//                                    .padding(horizontal = 5.dp, vertical = 5.dp)
-//                                    .height(intrinsicSize = IntrinsicSize.Max)
-//                            )
-//                        }
-//                    }
-
-                    LazyColumn {
-                        item {
-                            Column {
-                                Spacer(modifier = Modifier.height(30.dp))
-                                Text(text = "Избранное",
-                                    color = WidgetText,
-                                    fontSize = TextTitleSize,
-                                    fontFamily = FontFamily(Font(R.font.montserrat_medium)))
-                                Spacer(modifier = Modifier.padding(5.dp))
-                            }
-                        }
-                        itemsIndexed(fractals) {idx, item ->
-                            if (idx % 2 == 0)
-                                FractalRow(
-                                    first = item,
-                                    second = if (idx+1 < fractals.size) fractals[idx+1] else null,
-                                    vm = vm.fractalListViewModel,
-                                    navController = navHostController
-                                )
+                LazyColumn {
+                    item {
+                        Column {
+                            Spacer(modifier = Modifier.height(30.dp))
+                            Text(text = "Избранное",
+                                color = WidgetText,
+                                fontSize = TextTitleSize,
+                                fontFamily = FontFamily(Font(R.font.montserrat_medium)))
+                            Spacer(modifier = Modifier.padding(5.dp))
                         }
                     }
 
-                }
-
-
-                if (selection.value) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable(
-                                interactionSource = null,
-                                indication = null,
-                            ) {
-                                vm.fractalListViewModel.clearSelection()
+                    if (fractals.isNullOrEmpty()) {
+                        item {
+                            Spacer(modifier = Modifier.height(30.dp))
+                            Text(
+                                text = "Нет сохраненных фракталов",
+                                style = TextStyle(
+                                    fontFamily = FontFamily(
+                                        Font(R.font.montserrat_regular)
+                                    ),
+                                    fontSize = 20.sp,
+                                    color = SubTitlesText
+                                )
+                            )
+                        }
+                    }
+                    else {
+                        fractals?.let {
+                            itemsIndexed(it) {idx, item ->
+                                if (idx % 2 == 0)
+                                    FractalRow(
+                                        first = item,
+                                        second = if (idx+1 < it.size) it[idx+1] else null,
+                                        vm = vm.fractalListViewModel,
+                                        navController = navHostController
+                                    )
                             }
-                    )
+                        }
+                    }
                 }
 
-            }
-        }
 
-        if (vm.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
 
-                CircularProgressIndicator(
-                    color = Controllers,
-                    strokeWidth = 5.dp
+
+            if (selection.value) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable(
+                            interactionSource = null,
+                            indication = null,
+                        ) {
+                            vm.fractalListViewModel.clearSelection()
+                        }
                 )
             }
-        }
 
+        }
     }
 
+    if (vm.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
 
+            CircularProgressIndicator(
+                color = Controllers,
+                strokeWidth = 5.dp
+            )
+        }
+    }
 
 }

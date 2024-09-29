@@ -20,8 +20,8 @@ abstract class FractalListWidgetViewModel(
     abstract fun isSelectionExists(): MutableState<Boolean>
     abstract fun getFractalList(): List<Fractal>?
     abstract fun onClick(navController: NavHostController, id: Int)
-    abstract fun onLongPress(navController: NavHostController, id: Int)
-    abstract fun clearSelection()
+    open fun onLongPress(navController: NavHostController, id: Int) {}
+    open fun clearSelection() {}
 }
 
 
@@ -48,10 +48,6 @@ class FractalSamplesListWidgetViewModel(
             navController.navigate("$SCREEN_FRACTAL_BUILDER/$id/-1")
         }
     }
-
-    override fun onLongPress(navController: NavHostController, id: Int) {}
-
-    override fun clearSelection() {}
 }
 
 
@@ -73,6 +69,7 @@ class FractalLikedListWidgetViewModel(
     override fun isSelectionExists(): MutableState<Boolean> = isSelected
 
     override fun getFractalList(): List<Fractal>? {
+        println("FractalWidgetViewModel >> getFractalList >> ${fractals.value}")
         return fractals.value
     }
 

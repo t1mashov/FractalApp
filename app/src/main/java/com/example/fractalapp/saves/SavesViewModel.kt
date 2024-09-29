@@ -33,7 +33,7 @@ class SavesViewModel(
         fractalListViewModel.selectionId.value?.let {
             viewModelScope.launch(Dispatchers.IO) {
                 val title = fractalListViewModel.selectedFractalName.value
-                val fractalName = title.ifEmpty { "${System.currentTimeMillis()}" }
+                val fractalName = title.ifEmpty { Fractal.defaultName() }
                 repository.updateFractalTitle(it, fractalName)
             }
         }
@@ -49,7 +49,6 @@ class SavesViewModel(
         viewModelScope.launch {
             isLoading = true
             fractalsLiveData = repository.getLiked()
-            // fractalsLiveData.value!! -> nullPointerException
             fractalListViewModel.setFractals(fractalsLiveData)
             isLoading = false
         }

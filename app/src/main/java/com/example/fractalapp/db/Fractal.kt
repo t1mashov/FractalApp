@@ -44,6 +44,8 @@ class Fractal (
 ) {
     companion object {
         const val TABLE_NAME = "fractal"
+
+        fun defaultName(): String = "FRACTAL${System.currentTimeMillis()}"
     }
     override fun toString(): String {
         return "Fractal(id=$id, title=$title, rules=$rules, axiom=$axiom, angle=$angle, gens=$gens, step=$step)"
