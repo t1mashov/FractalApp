@@ -84,7 +84,8 @@ fun SettingsPanel(
         Input(
             modifier = Modifier.fillMaxWidth(),
             value = rules,
-            placeholder = "Правила"
+            placeholder = "Правила",
+            keyboardType = KeyboardType.Ascii
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
@@ -94,6 +95,7 @@ fun SettingsPanel(
                 modifier = Modifier.fillMaxWidth(fraction = 0.65f),
                 placeholder = "Аксиома",
                 value = axiom,
+                keyboardType = KeyboardType.Ascii
             )
             Spacer(modifier = Modifier.padding(10.dp))
             Input(
@@ -117,7 +119,6 @@ fun SettingsPanel(
                 onCheckedChange = {
                     useColors.value = !useColors.value
                     vm.useColors.value = useColors.value
-                    Log.d("CHECKBOX", "${useColors.value}, vm=${vm.useColors.value}")
                 },
                 colors = CheckboxDefaults.colors(
                     checkedColor = Controllers,
@@ -270,7 +271,7 @@ fun Input(
     value: MutableState<String>,
     modifier: Modifier = Modifier,
     placeholder: String = "",
-    keyboardType: KeyboardType = KeyboardType.Ascii
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
