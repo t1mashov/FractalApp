@@ -16,14 +16,14 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = ScreenBackground,
-    secondary = ScreenBackground,
+    primary = FractalTheme.ScreenBackground,
+    secondary = FractalTheme.ScreenBackground,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = ScreenBackground,
-    secondary = ScreenBackground,
+    primary = FractalTheme.ScreenBackground,
+    secondary = FractalTheme.ScreenBackground,
     tertiary = Pink40
 
     /* Other default colors to override
@@ -53,15 +53,17 @@ fun FractalAppTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            window.navigationBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        }
-    }
+//    val view = LocalView.current
+//    if (!view.isInEditMode) {
+//        SideEffect {
+//            val window = (view.context as Activity).window
+//            window.statusBarColor = colorScheme.primary.toArgb()
+//            window.navigationBarColor = colorScheme.primary.toArgb()
+//            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+//        }
+//    }
+
+    FractalTheme.updateStatusBar()
 
     MaterialTheme(
         colorScheme = colorScheme,

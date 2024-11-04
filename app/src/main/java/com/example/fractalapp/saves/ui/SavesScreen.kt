@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +44,7 @@ import com.example.fractalapp.R
 import com.example.fractalapp.fractal.ui.Input
 import com.example.fractalapp.home.ui.FractalRow
 import com.example.fractalapp.saves.SavesViewModel
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 
 @Composable
 fun SavesScreen(
@@ -61,7 +62,7 @@ fun SavesScreen(
 
     Image(
         modifier = Modifier.fillMaxSize(),
-        painter = painterResource(id = R.drawable.bg),
+        painter = painterResource(id = FractalTheme.Bg),
         contentDescription = null,
         contentScale = ContentScale.Crop
     )
@@ -92,7 +93,7 @@ fun SavesScreen(
                         },
                     imageVector = ImageVector.vectorResource(R.drawable.trash),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(Controllers)
+                    colorFilter = ColorFilter.tint(FractalTheme.Controllers)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Input(
@@ -112,7 +113,7 @@ fun SavesScreen(
                         },
                     imageVector = ImageVector.vectorResource(R.drawable.ok),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(Controllers)
+                    colorFilter = ColorFilter.tint(FractalTheme.Controllers)
                 )
             }
         }
@@ -128,8 +129,8 @@ fun SavesScreen(
                         Column {
                             Spacer(modifier = Modifier.height(30.dp))
                             Text(text = "Избранное",
-                                color = WidgetText,
-                                fontSize = TextTitleSize,
+                                color = FractalTheme.WidgetText,
+                                fontSize = FractalTheme.TextTitleSize,
                                 fontFamily = FontFamily(Font(R.font.montserrat_medium)))
                             Spacer(modifier = Modifier.padding(5.dp))
                         }
@@ -145,7 +146,7 @@ fun SavesScreen(
                                         Font(R.font.montserrat_regular)
                                     ),
                                     fontSize = 20.sp,
-                                    color = SubTitlesText
+                                    color = FractalTheme.SubTitlesText
                                 )
                             )
                         }
@@ -157,6 +158,8 @@ fun SavesScreen(
                                     FractalRow(
                                         first = item,
                                         second = if (idx+1 < it.size) it[idx+1] else null,
+                                        firstIcon = remember { mutableStateOf("") },
+                                        secondIcon = null,
                                         vm = vm.fractalListViewModel,
                                         navController = navHostController
                                     )
@@ -191,7 +194,7 @@ fun SavesScreen(
         ) {
 
             CircularProgressIndicator(
-                color = Controllers,
+                color = FractalTheme.Controllers,
                 strokeWidth = 5.dp
             )
         }

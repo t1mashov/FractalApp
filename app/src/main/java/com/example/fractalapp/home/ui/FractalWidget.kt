@@ -17,7 +17,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,19 +40,19 @@ import androidx.navigation.NavHostController
 import com.example.fractalapp.R
 import com.example.fractalapp.db.BitmapConverter
 import com.example.fractalapp.db.Fractal
+import com.example.fractalapp.fractal.model.FractalColorConvert
 import com.example.fractalapp.home.FractalListWidgetViewModel
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FractalWidget(
     fractal: Fractal,
+    icon: MutableState<String>,
     navController: NavHostController?,
     vm: FractalListWidgetViewModel,
     modifier: Modifier = Modifier
 ) {
-
-    val bmp = BitmapConverter.toBitmap(fractal.icon)
 
     val selection = remember { vm.isSelectionExists() }
     val selectionId = remember { vm.selectionId }
@@ -57,10 +61,10 @@ fun FractalWidget(
         modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor =
-                if (selectionId.value != fractal.id) WidgetFractalSampleBackground
-                else WidgetFractalSampleBackgroundLongPressed
+                if (selectionId.value != fractal.id) FractalTheme.WidgetFractalSampleBackground
+                else FractalTheme.WidgetFractalSampleBackgroundLongPressed
         ),
-        shape = RoundedCornerShape(WidgetCorner)
+        shape = RoundedCornerShape(FractalTheme.WidgetCorner)
     ) {
         Box(
             modifier = Modifier
@@ -86,16 +90,14 @@ fun FractalWidget(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                bmp?.let {
-                    Image(
-                        modifier = Modifier
-                            .size(150.dp, 150.dp)
-                            .clip(RoundedCornerShape(15.dp)),
-                        bitmap = bmp.asImageBitmap(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit
-                    )
-                }
+                Image(
+                    modifier = Modifier
+                        .size(150.dp, 150.dp)
+                        .clip(RoundedCornerShape(15.dp)),
+                    bitmap = BitmapConverter.toBitmap(icon.value)!!.asImageBitmap(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
                 Text(
                     text = fractal.title,
@@ -104,7 +106,7 @@ fun FractalWidget(
                             Font(R.font.montserrat_regular)
                         ),
                         fontSize = 20.sp,
-                        color = WidgetText,
+                        color = FractalTheme.WidgetText,
                     ),
                     textAlign = TextAlign.Center
                 )

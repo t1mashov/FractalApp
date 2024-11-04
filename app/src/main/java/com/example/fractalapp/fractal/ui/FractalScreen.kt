@@ -1,7 +1,5 @@
 package com.example.fractalapp.fractal.ui
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.example.fractalapp.AppFractal
 import com.example.fractalapp.R
 import com.example.fractalapp.fractal.FractalViewModel
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +64,7 @@ fun FractalScreen(
         },
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp,
-        sheetContainerColor = BottomPanel
+        sheetContainerColor = FractalTheme.BottomPanel
     ) {
 
         ZoomFractal(vm)
@@ -92,8 +90,8 @@ fun FractalScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = ScreenBackgroundTAlpha,
-                            shape = RoundedCornerShape(WidgetCorner)
+                            color = FractalTheme.ScreenBackgroundTAlpha,
+                            shape = RoundedCornerShape(FractalTheme.WidgetCorner)
                         )
                         .padding(2.dp)
                 ) {
@@ -106,7 +104,7 @@ fun FractalScreen(
                             },
                         imageVector = ImageVector.vectorResource(R.drawable.star),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(Controllers))
+                        colorFilter = ColorFilter.tint(FractalTheme.Controllers))
                 }
 
                 Spacer(modifier = Modifier.padding(15.dp))
@@ -114,8 +112,8 @@ fun FractalScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = ScreenBackgroundTAlpha,
-                            shape = RoundedCornerShape(WidgetCorner)
+                            color = FractalTheme.ScreenBackgroundTAlpha,
+                            shape = RoundedCornerShape(FractalTheme.WidgetCorner)
                         )
                         .padding(2.dp)
                 ) {
@@ -128,7 +126,7 @@ fun FractalScreen(
                             },
                         imageVector = ImageVector.vectorResource(R.drawable.download),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(Controllers)
+                        colorFilter = ColorFilter.tint(FractalTheme.Controllers)
                     )
                 }
 
@@ -137,8 +135,8 @@ fun FractalScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = ScreenBackgroundTAlpha,
-                            shape = RoundedCornerShape(WidgetCorner)
+                            color = FractalTheme.ScreenBackgroundTAlpha,
+                            shape = RoundedCornerShape(FractalTheme.WidgetCorner)
                         )
                         .padding(2.dp)
                 ) {
@@ -157,7 +155,7 @@ fun FractalScreen(
                             },
                         imageVector = ImageVector.vectorResource(R.drawable.fractal_params),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(Controllers)
+                        colorFilter = ColorFilter.tint(FractalTheme.Controllers)
                     )
                 }
 
@@ -174,7 +172,7 @@ fun Img() {
     Box(
         modifier = Modifier
             .background(
-                color = Color.Black,
+                color = FractalTheme.BgColor,
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(5.dp)
@@ -186,7 +184,7 @@ fun Img() {
                 .clickable {},
             imageVector = ImageVector.vectorResource(R.drawable.star),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(Controllers))
+            colorFilter = ColorFilter.tint(FractalTheme.Controllers))
     }
 }
 

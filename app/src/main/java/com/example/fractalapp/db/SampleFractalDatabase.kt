@@ -93,7 +93,6 @@ class SampleFractalDatabase(ctx: Context) : SQLiteOpenHelper(
 
     fun setup(ctx: Context) {
         copyDatabaseFromAssets(ctx)
-        Log.d("FRACTAL_DB", "setup()")
     }
 
 

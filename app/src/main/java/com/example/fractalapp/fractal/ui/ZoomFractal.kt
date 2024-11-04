@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.example.fractalapp.fractal.FractalViewModel
-import com.example.fractalapp.ui.theme.Controllers
+import com.example.fractalapp.ui.theme.FractalTheme
 
 
 @Composable
@@ -33,7 +33,7 @@ fun ZoomFractal(vm: FractalViewModel) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(FractalTheme.BgColor),
         contentAlignment = Alignment.Center
     ) {
 
@@ -82,7 +82,7 @@ fun ZoomFractal(vm: FractalViewModel) {
     ) {
         if (isLoading.value) {
             CircularProgressIndicator(
-                color = Controllers,
+                color = FractalTheme.Controllers,
                 strokeWidth = 5.dp
             )
         }

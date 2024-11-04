@@ -5,6 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
+import androidx.compose.ui.graphics.toArgb
+import com.example.fractalapp.ui.theme.FractalTheme
 import java.util.Stack
 import kotlin.math.cos
 import kotlin.math.sin
@@ -50,7 +52,7 @@ class FractalRobot : FractalBuilder {
         val canvas = Canvas(bitmap)
 
         val paint = Paint().apply {
-            color = if (fr.useColors) Color.BLACK else Color.WHITE
+            color = if (fr.useColors) Color.BLACK else FractalTheme.FractalColor.toArgb()
             strokeWidth = 1f
         }
 

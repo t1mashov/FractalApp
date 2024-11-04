@@ -34,9 +34,11 @@ import com.example.fractalapp.home.FractalLikedListWidgetViewModel
 import com.example.fractalapp.home.FractalSamplesListWidgetViewModel
 import com.example.fractalapp.home.HomeViewModel
 import com.example.fractalapp.home.ui.HomeScreen
+import com.example.fractalapp.rulestext.RulesText
 import com.example.fractalapp.saves.SavesViewModel
 import com.example.fractalapp.saves.ui.SavesScreen
 import com.example.fractalapp.ui.theme.FractalAppTheme
+import com.example.fractalapp.ui.theme.FractalTheme
 import java.io.IOException
 
 class MainActivity : ComponentActivity(), AppFractal {
@@ -80,19 +82,14 @@ class MainActivity : ComponentActivity(), AppFractal {
             (application as App).repository
         )
 
-        println("before homeViewModel")
         homeViewModel = HomeViewModel(
             (application as App).repository,
             fractalSamplesViewModel
         )
-        println("after homeViewModel, before savesViewModel")
         savesViewModel = SavesViewModel(
             (application as App).repository,
             fractalLikedViewModel
         )
-        println("after savesViewModel")
-
-
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS_FRACTAL, Context.MODE_PRIVATE)
 
@@ -105,6 +102,7 @@ class MainActivity : ComponentActivity(), AppFractal {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     NavigationComponent(
                         app = this,
                         navController = navController
@@ -233,6 +231,10 @@ class MainActivity : ComponentActivity(), AppFractal {
             }
             composable(SCREEN_SAVED) {
                 SavesScreen(vm = savesViewModel, navHostController = navController)
+            }
+            composable(SCREEN_ABOUT_L_SYSTEM) {
+                println("MainActivity >> NavigationComponent() >> SCREEN_ABOUT_L_SYSTEM")
+                RulesText()
             }
         }
     }

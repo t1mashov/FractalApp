@@ -13,7 +13,7 @@ class Fractal (
     val title: String = "",
 
     @ColumnInfo(name = "icon")
-    val icon: String,
+    var icon: String,
 
     @ColumnInfo(name = "rules", defaultValue = "")
     val rules: String = "",

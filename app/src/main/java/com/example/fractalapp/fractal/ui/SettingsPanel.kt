@@ -46,7 +46,7 @@ import com.example.fractalapp.App
 import com.example.fractalapp.R
 import com.example.fractalapp.fractal.FractalViewModel
 import com.example.fractalapp.fractal.model.FractalResult
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -110,7 +110,7 @@ fun SettingsPanel(
         Row (verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Цвета",
                 style = TextStyle(
-                    color = WidgetText,
+                    color = FractalTheme.WidgetText,
                     fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                     fontSize = 16.sp
                 ))
@@ -121,8 +121,8 @@ fun SettingsPanel(
                     vm.useColors.value = useColors.value
                 },
                 colors = CheckboxDefaults.colors(
-                    checkedColor = Controllers,
-                    uncheckedColor = Controllers
+                    checkedColor = FractalTheme.Controllers,
+                    uncheckedColor = FractalTheme.Controllers
                 )
             )
         }
@@ -136,13 +136,13 @@ fun SettingsPanel(
                 )) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = el.first, style = TextStyle(
-                            color = WidgetText,
+                            color = FractalTheme.WidgetText,
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                             fontSize = 16.sp
                         ))
                         Spacer(modifier = Modifier.padding(10.dp))
                         Text(text = "${el.second.value.toInt()}", style = TextStyle(
-                            color = HintText,
+                            color = FractalTheme.HintText,
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                             fontSize = 16.sp
                         ))
@@ -156,8 +156,8 @@ fun SettingsPanel(
                             valueRange = 0f..255f,
                             colors = SliderDefaults.colors(
                                 thumbColor = el.third,
-                                activeTrackColor = SliderActive,
-                                inactiveTrackColor = SliderInactive
+                                activeTrackColor = FractalTheme.SliderActive,
+                                inactiveTrackColor = FractalTheme.SliderInactive
                             )
                         )
                     }
@@ -187,7 +187,7 @@ fun SettingsPanel(
         Button(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Controllers
+                containerColor = FractalTheme.Controllers
             ),
             onClick = {
                 vm.fractalLoading.value = true
@@ -227,7 +227,7 @@ fun SettingsPanel(
                 modifier = Modifier.padding(vertical = 5.dp),
                 color = Color.Black,
                 fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                fontSize = TextButtonSize)
+                fontSize = FractalTheme.TextButtonSize)
         }
 
         Spacer(modifier = Modifier.padding(20.dp))
@@ -258,7 +258,7 @@ fun fractalPlaceholder(txt: String): @Composable () -> Unit =
         Text(
             text = txt,
             style = TextStyle(
-                color = HintText,
+                color = FractalTheme.HintText,
                 fontFamily = FontFamily(Font(R.font.montserrat_regular)),
                 fontSize = 16.sp
             ))

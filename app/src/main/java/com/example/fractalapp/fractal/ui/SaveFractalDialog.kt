@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.fractalapp.R
 import com.example.fractalapp.fractal.FractalViewModel
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 
 @Composable
 fun SaveFractalDialog(
@@ -43,8 +43,8 @@ fun SaveFractalDialog(
         Box(modifier = Modifier
             .padding(15.dp)
             .background(
-                color = BottomPanel,
-                shape = RoundedCornerShape(WidgetCorner)
+                color = FractalTheme.BottomPanel,
+                shape = RoundedCornerShape(FractalTheme.WidgetCorner)
             )
         ) {
             Column(
@@ -53,9 +53,9 @@ fun SaveFractalDialog(
                 Text(
                     text = "Сохранить фрактал в избранное",
                     style = TextStyle(
-                        color = HintText,
+                        color = FractalTheme.HintText,
                         fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        fontSize = TextTitleSize
+                        fontSize = FractalTheme.TextTitleSize
                     )
                 )
                 
@@ -71,9 +71,9 @@ fun SaveFractalDialog(
                 Text(
                     text = "* При отсутствии названия фрактал будет сохранен под случайным номером",
                     style = TextStyle(
-                        color = HintText,
+                        color = FractalTheme.HintText,
                         fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                        fontSize = TextDescriptionSize
+                        fontSize = FractalTheme.TextDescriptionSize
                     )
                 )
 
@@ -101,13 +101,13 @@ fun SaveFractalDialog(
                             onDismiss()
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Controllers
+                            containerColor = FractalTheme.Controllers
                         )
                     ) {
                         Text(text = "Отменить", style = TextStyle(
-                            color = ButtonText,
+                            color = FractalTheme.ButtonText,
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                            fontSize = TextButtonSize
+                            fontSize = FractalTheme.TextButtonSize
                         ))
                     }
 
@@ -117,13 +117,13 @@ fun SaveFractalDialog(
                             onDismiss()
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Controllers
+                            containerColor = FractalTheme.Controllers
                         )
                     ) {
                         Text(text = "ОК", style = TextStyle(
-                            color = ButtonText,
+                            color = FractalTheme.ButtonText,
                             fontFamily = FontFamily(Font(R.font.montserrat_regular)),
-                            fontSize = TextButtonSize
+                            fontSize = FractalTheme.TextButtonSize
                         ))
                     }
                 }

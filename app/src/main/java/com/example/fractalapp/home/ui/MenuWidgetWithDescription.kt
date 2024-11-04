@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fractalapp.R
-import com.example.fractalapp.ui.theme.*
+import com.example.fractalapp.ui.theme.FractalTheme
 
 @Composable
 fun MenuWidgetWithDescription(
@@ -42,7 +42,8 @@ fun MenuWidgetWithDescription(
     firstColor: Color = Color(0xFF097E66),
     secondColor: Color = Color(0xFF1D2B53),
     imgTint: Color = firstColor,
-    onClick: ()->Unit = {}
+    onClick: ()->Unit = {},
+    modifier: Modifier = Modifier,
 ) {
 
     val interactionSource = remember {
@@ -53,11 +54,11 @@ fun MenuWidgetWithDescription(
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(WidgetCorner),
+        shape = RoundedCornerShape(FractalTheme.WidgetCorner),
     ) {
 
         Box(
-            Modifier
+            modifier
                 .background(
                     Brush.horizontalGradient(
                         listOf(
@@ -69,7 +70,7 @@ fun MenuWidgetWithDescription(
                 .clickable(
                     interactionSource = interactionSource,
                     indication = rememberRipple(
-                        color = Ripple,
+                        color = FractalTheme.Ripple,
                     )
                 ) {
                     onClick()
@@ -85,7 +86,7 @@ fun MenuWidgetWithDescription(
 
                 Image (
                     modifier = Modifier
-                        .size(200.dp)
+                        .defaultMinSize(200.dp)
                         .padding(start = 20.dp),
                     imageVector = ImageVector.vectorResource(imgResource),
                     contentDescription = null,
@@ -111,8 +112,8 @@ fun MenuWidgetWithDescription(
                             fontFamily = FontFamily(
                                 Font(R.font.montserrat_bold)
                             ),
-                            fontSize = TextWidgetTitleSize,
-                            color = WidgetText,
+                            fontSize = FractalTheme.TextWidgetTitleSize,
+                            color = FractalTheme.WidgetText,
                         ),
                     )
                 }
@@ -129,8 +130,8 @@ fun MenuWidgetWithDescription(
                             fontFamily = FontFamily(
                                 Font(R.font.montserrat_regular)
                             ),
-                            fontSize = TextDescriptionSize,
-                            color = SubTitlesText,
+                            fontSize = FractalTheme.TextDescriptionSize,
+                            color = FractalTheme.SubTitlesText,
                         ))
                     Spacer(modifier = Modifier.weight(1f))
                 }

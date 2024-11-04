@@ -69,7 +69,6 @@ class FractalLikedListWidgetViewModel(
     override fun isSelectionExists(): MutableState<Boolean> = isSelected
 
     override fun getFractalList(): List<Fractal>? {
-        println("FractalWidgetViewModel >> getFractalList >> ${fractals.value}")
         return fractals.value
     }
 
