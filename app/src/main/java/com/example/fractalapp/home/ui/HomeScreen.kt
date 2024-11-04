@@ -46,7 +46,6 @@ fun HomeScreen(
     vm: HomeViewModel,
 ) {
 
-    val scroll = rememberScrollState()
     val isLoading = remember { vm.isLoading }
 
     HomeScreenDisplay(
@@ -63,7 +62,6 @@ fun HomeScreen(
         fractalListWidget = {
             FractalListWidget(
                 vm = vm.fractalListViewModel,
-                iconMap = vm.icons,
                 navController = navController,
             )
         }
@@ -97,10 +95,6 @@ fun HomeScreenDisplay(
     if (isThemeSwitches.value) {
         FractalTheme.changeTheme()
         isThemeSwitches.value = false
-    }
-
-    val test = @Composable {
-        FractalTheme.updateStatusBar()
     }
 
     Image(

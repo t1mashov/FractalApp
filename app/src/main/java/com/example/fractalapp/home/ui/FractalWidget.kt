@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import com.example.fractalapp.R
 import com.example.fractalapp.db.BitmapConverter
 import com.example.fractalapp.db.Fractal
+import com.example.fractalapp.db.FractalState
 import com.example.fractalapp.fractal.model.FractalColorConvert
 import com.example.fractalapp.home.FractalListWidgetViewModel
 import com.example.fractalapp.ui.theme.FractalTheme
@@ -47,8 +48,7 @@ import com.example.fractalapp.ui.theme.FractalTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FractalWidget(
-    fractal: Fractal,
-    icon: MutableState<String>,
+    fractal: FractalState,
     navController: NavHostController?,
     vm: FractalListWidgetViewModel,
     modifier: Modifier = Modifier
@@ -94,13 +94,13 @@ fun FractalWidget(
                     modifier = Modifier
                         .size(150.dp, 150.dp)
                         .clip(RoundedCornerShape(15.dp)),
-                    bitmap = BitmapConverter.toBitmap(icon.value)!!.asImageBitmap(),
+                    bitmap = BitmapConverter.toBitmap(fractal.icon.value)!!.asImageBitmap(),
                     contentDescription = null,
                     contentScale = ContentScale.Fit
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
                 Text(
-                    text = fractal.title,
+                    text = fractal.title.value,
                     style = TextStyle(
                         fontFamily = FontFamily(
                             Font(R.font.montserrat_regular)

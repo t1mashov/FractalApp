@@ -58,7 +58,7 @@ fun SavesScreen(
 
     val ctx = LocalContext.current
 
-    val fractals by vm.fractalListViewModel.fractals.observeAsState()
+    val fractalStates = remember { vm.fractalStateList }
 
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -136,7 +136,7 @@ fun SavesScreen(
                         }
                     }
 
-                    if (fractals.isNullOrEmpty()) {
+                    if (fractalStates.isEmpty()) {
                         item {
                             Spacer(modifier = Modifier.height(30.dp))
                             Text(
@@ -152,14 +152,12 @@ fun SavesScreen(
                         }
                     }
                     else {
-                        fractals?.let {
+                        fractalStates.let {
                             itemsIndexed(it) {idx, item ->
                                 if (idx % 2 == 0)
                                     FractalRow(
                                         first = item,
                                         second = if (idx+1 < it.size) it[idx+1] else null,
-                                        firstIcon = remember { mutableStateOf("") },
-                                        secondIcon = null,
                                         vm = vm.fractalListViewModel,
                                         navController = navHostController
                                     )

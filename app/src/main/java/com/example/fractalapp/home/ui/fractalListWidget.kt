@@ -14,15 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.fractalapp.db.Fractal
+import com.example.fractalapp.db.FractalState
 import com.example.fractalapp.home.FractalListWidgetViewModel
 
 
 @Composable
 fun FractalRow(
-    first: Fractal,
-    second: Fractal?,
-    firstIcon: MutableState<String>,
-    secondIcon: MutableState<String>?,
+    first: FractalState,
+    second: FractalState?,
     vm: FractalListWidgetViewModel,
     navController: NavHostController?
 ) {
@@ -36,16 +35,14 @@ fun FractalRow(
         FractalWidget(
             modifier = Modifier.weight(1f),
             fractal = first,
-            icon = firstIcon,
             vm = vm,
             navController = navController,
         )
         Spacer(modifier = Modifier.padding(5.dp))
-        if (second != null && secondIcon != null) {
+        if (second != null) {
             FractalWidget(
                 modifier = Modifier.weight(1f),
                 fractal = second,
-                icon = secondIcon,
                 vm = vm,
                 navController = navController,
             )
@@ -59,16 +56,13 @@ fun FractalRow(
 @Composable
 fun FractalListWidget(
     vm: FractalListWidgetViewModel,
-    iconMap: SnapshotStateMap<Int, MutableState<String>>,
     navController: NavHostController?
 ) {
-    vm.getFractalList()?.let {
-        for (i in 0..<it.size step 2) {
+    vm.getFractalStateList()?.let {
+        for (i in it.indices step 2) {
             FractalRow(
                 first = it[i],
                 second = if (i+1 < it.size) it[i+1] else null,
-                firstIcon = iconMap[i]!!,
-                secondIcon = if (i+1 < it.size) iconMap[i+1]!! else null,
                 vm = vm,
                 navController = navController,
             )

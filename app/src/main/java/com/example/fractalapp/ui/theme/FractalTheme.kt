@@ -65,7 +65,7 @@ object FractalTheme {
     val HintText
         get() = if (isDark) Color(0xFFD1D1D1) else Color(0xFF404040)
     val WidgetFractalSampleBackground
-        get() = if (isDark) Color(0xDC464646) else Color(0xDCD4D4D4)
+        get() = if (isDark) Color(0xDC464646) else Color(0xDCE2DFDD)
     val WidgetFractalSampleBackgroundLongPressed
         get() = if (isDark) Color(0xDC7E7E7E) else Color(0xDCAAAAAA)
     val SliderActive

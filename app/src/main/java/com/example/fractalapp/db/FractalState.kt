@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 
 class FractalState(
     val id: Int = 0,
-    val title: String = "",
-    var icon: MutableState<String>,
+    val title: MutableState<String>,
+    val icon: MutableState<String>,
     val rules: String = "",
     val axiom: String = "",
     val angle: String = "",
@@ -18,10 +18,10 @@ class FractalState(
     val blueChannel: Int = 0
 ) {
     companion object {
-        fun fromFractal(f: Fractal) {
-            FractalState(
+        fun fromFractal(f: Fractal): FractalState {
+            return FractalState(
                 f.id,
-                f.title,
+                mutableStateOf(f.title),
                 mutableStateOf(f.icon),
                 f.rules,
                 f.axiom,

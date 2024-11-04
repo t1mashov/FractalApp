@@ -75,12 +75,8 @@ class MainActivity : ComponentActivity(), AppFractal {
         fractalViewModel = FractalViewModel(
             (application as App).repository
         )
-        fractalSamplesViewModel = FractalSamplesListWidgetViewModel(
-            (application as App).repository
-        )
-        fractalLikedViewModel = FractalLikedListWidgetViewModel(
-            (application as App).repository
-        )
+        fractalSamplesViewModel = FractalSamplesListWidgetViewModel()
+        fractalLikedViewModel = FractalLikedListWidgetViewModel()
 
         homeViewModel = HomeViewModel(
             (application as App).repository,

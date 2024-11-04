@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.example.fractalapp.*
 import com.example.fractalapp.db.Fractal
 import com.example.fractalapp.db.FractalRepository
+import com.example.fractalapp.db.FractalState
 import com.example.fractalapp.fractal.model.FractalColorConvert
 import com.example.fractalapp.ui.theme.FractalTheme
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class HomeViewModel(
     val fractalListViewModel: FractalSamplesListWidgetViewModel,
 
     val samples: SnapshotStateList<Fractal> = mutableStateListOf(),
-    val icons: SnapshotStateMap<Int, MutableState<String>> = mutableStateMapOf(),
+    val sampleStates: SnapshotStateList<FractalState> = mutableStateListOf(),
     val isLoading: MutableState<Boolean> = mutableStateOf(true)
 
 ): ViewModel() {
@@ -31,28 +32,27 @@ class HomeViewModel(
     init {
         loadSamples()
         fractalListViewModel.setFractals(samples)
+        fractalListViewModel.fractalStates = sampleStates
     }
 
     private fun loadSamples() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.value = true
+            val repoSamples = repository.getSamples()
             samples.clear()
-            icons.clear()
             samples.addAll(
-                repository.getSamples()
+                repoSamples
             )
-            for (sample in samples) {
-                icons[sample.id] = mutableStateOf(sample.icon)
-            }
+            sampleStates.clear()
+            sampleStates.addAll(
+                repoSamples.map { FractalState.fromFractal(it) }
+            )
             isLoading.value = false
         }
         FractalTheme.themeObservers["samples"] = {
             viewModelScope.launch {
-                for (sample in samples) {
-                    icons[sample.id]?.value = FractalColorConvert.convert(sample.icon, sample.useColors)
-                    icons[sample.id]?.let {
-                        sample.icon = it.value
-                    }
+                for (sample in sampleStates) {
+                    sample.icon.value = FractalColorConvert.convert(sample.icon.value, sample.useColors)
                 }
             }
         }
