@@ -13,8 +13,10 @@ import com.example.fractalapp.db.BitmapConverter
 import com.example.fractalapp.db.Fractal
 import com.example.fractalapp.db.FractalRepository
 import com.example.fractalapp.fractal.model.FractalBuilder
+import com.example.fractalapp.fractal.model.FractalColorConvert
 import com.example.fractalapp.fractal.model.FractalRobot
 import com.example.fractalapp.fractal.model.FractalRules
+import com.example.fractalapp.ui.theme.FractalTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,6 +33,7 @@ class FractalViewModel(
     val fractalScale: MutableState<Float> = mutableStateOf(1f),
     val fractalOffset: MutableState<Offset> = mutableStateOf(Offset(0f, 0f)),
 
+    val icon: MutableState<String> = mutableStateOf(""),
     val rules: MutableState<String> = mutableStateOf(""),
     val axiom: MutableState<String> = mutableStateOf(""),
     val angle: MutableState<String> = mutableStateOf(""),
@@ -58,6 +61,18 @@ class FractalViewModel(
         showDialog.value = true
     }
 
+//    init {
+//        FractalTheme.themeObservers["fractalVM"] = {
+//            viewModelScope.launch {
+//                if (icon.value.isNotEmpty()) {
+//                    val icon = FractalColorConvert.convert(icon.value, useColors.value)
+//                    fractalImage.value = BitmapConverter.toBitmap(icon)
+//                    println("FractalViewModel >> init")
+//                }
+//            }
+//        }
+//    }
+
     fun loadFractal() {
         if ((id != null && id != -1) || (sid != null && sid != -1)) {
             viewModelScope.launch(Dispatchers.IO) {
@@ -67,6 +82,7 @@ class FractalViewModel(
                     else repository.getLikedById(sid!!)
 
                 rules.value = fractal.rules
+                icon.value = fractal.icon
                 axiom.value = fractal.axiom
                 angle.value = fractal.angle
                 gens.value = fractal.gens
@@ -76,7 +92,9 @@ class FractalViewModel(
                 greenChannel.value = fractal.greenChannel.toFloat()
                 blueChannel.value = fractal.blueChannel.toFloat()
 
-                fractalImage.value = BitmapConverter.toBitmap(fractal.icon)
+                fractalImage.value = BitmapConverter.toBitmap(
+                    FractalColorConvert.convert(fractal.icon, fractal.useColors)
+                )
             }
         }
 

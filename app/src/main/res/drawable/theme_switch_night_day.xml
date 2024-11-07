@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="76dp"
+    android:height="76dp"
+    android:viewportWidth="76"
+    android:viewportHeight="76">
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="8dp"
+            android:height="8dp"
+            android:viewportWidth="43.2"
+            android:viewportHeight="43.2">
+            <path android:name="anim_path"
+                android:fillColor="#000"
+                android:strokeWidth="5"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:strokeColor="#000"
+                android:pathData="M 0,0"
+                />
+        </vector>
+    </aapt:attr>
+
+    <target
+        android:name="anim_path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:repeatCount="0"
+                android:duration="500"
+                android:propertyName="pathData"
+                android:valueFrom="
+M 29.816,13.604
+A 1.597 1.597 0 0 1 13.604,29.816
+C 14.882,29.816 16.08,29.735 17.756,29.257
+  18.236,29.177 19.274,28.937 20.418,28.404
+  21.43,27.899 22.868,27.101 24.066,26.142
+  24.944,25.343 25.823,24.385 26.807,23.161
+  27.819,21.83 28.458,20.392 28.937,18.954
+  29.257,17.756 29.816,16.08 29.816,13.604
+Z
+M 21.6,29.9
+L 21.6,28.8
+M 24,26.4
+L 26.4,24
+M 27.4,23.1
+L 28.8,21.6
+M 26.4,24
+L 28.8,26.4
+M 21.6,28.8
+L 21.7,30.5
+M 26.4,24
+L 24,26.4
+M 28.8,24
+L 26.4,24
+M 27.2,27.2
+L 25.6,25.6
+"
+                android:valueTo="
+M 26.75,16.6
+A 1 1 0 0 1 16.6,26.75
+C 15.7,25.85 15.15,24.95 14.816,23.85
+  14.334,22.567 14.35,20.933 14.85,19.35
+  15.3,18.067 15.95,17.233 16.6,16.6
+  17.416,15.784 18.45,15.15 19.6,14.75
+  21.35,14.267 22.9,14.517 23.95,14.8
+  25.116,15.25 26.084,15.883 26.75,16.6
+Z
+M 21.6,7.15
+L 21.6,4.75
+M 31.2,11.95
+L 33.6,9.55
+M 36,21.55
+L 38.4,21.55
+M 31.2,31.15
+L 33.6,33.55
+M 21.6,35.95
+L 21.6,38.35
+M 12,31.15
+L 9.6,33.55
+M 7.2,21.55
+L 4.8,21.55
+M 12,11.95
+L 9.6,9.55
+"
+                android:valueType="pathType"
+                />
+
+        </aapt:attr>
+    </target>
+
+</animated-vector>

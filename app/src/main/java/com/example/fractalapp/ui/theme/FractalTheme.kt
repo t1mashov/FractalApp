@@ -18,7 +18,8 @@ import com.example.fractalapp.R
 import kotlinx.coroutines.launch
 
 object FractalTheme {
-    private var isDark by mutableStateOf(true)
+    var isDark by mutableStateOf(true)
+        private set
     val themeObservers = hashMapOf<String, (Boolean) -> Unit>()
 
     @Composable
@@ -57,6 +58,9 @@ object FractalTheme {
             }
         }
     }
+
+    val SwitchTheme
+        get() = if (isDark) Color(0xFFDBECF1) else Color(0xFF2D2726)
 
     val WidgetText
         get() = if (isDark) Color(0xFFDCDCDC) else Color(0xFF212121)
@@ -107,7 +111,7 @@ object FractalTheme {
     val RulesText
         get() = if (isDark) Color(0xBFFFFFFF) else Color(0xFF000000)
     val RulesSelection
-        get() = if (isDark) Color(0xFF00FFD9) else Color(0xFF00717F)
+        get() = if (isDark) Color(0xFF00FFD9) else Color(0xFF0235CB)
 
     val FractalColor
         get() = if (isDark) Color(0xFFFFFFFF) else Color(0xFF01183B)

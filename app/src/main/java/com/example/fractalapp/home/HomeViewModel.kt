@@ -25,7 +25,8 @@ class HomeViewModel(
 
     val samples: SnapshotStateList<Fractal> = mutableStateListOf(),
     val sampleStates: SnapshotStateList<FractalState> = mutableStateListOf(),
-    val isLoading: MutableState<Boolean> = mutableStateOf(true)
+    val isLoading: MutableState<Boolean> = mutableStateOf(true),
+    val isThemeChanging: MutableState<Boolean> = mutableStateOf(true)
 
 ): ViewModel() {
 

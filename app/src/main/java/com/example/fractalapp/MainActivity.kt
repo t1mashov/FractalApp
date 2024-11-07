@@ -210,8 +210,6 @@ class MainActivity : ComponentActivity(), AppFractal {
                 val fractalId = it.arguments?.getString("id", "-1")?.toInt()
                 val savedFractalId = it.arguments?.getString("sid", "-1")?.toInt()
 
-                println("MainActivity >> id=$fractalId, sid=$savedFractalId")
-
                 if (fractalId == -1 && savedFractalId == -1) {
                     fractalViewModel.clearSettings()
                     fractalViewModel.fractalImage.value =
@@ -229,7 +227,6 @@ class MainActivity : ComponentActivity(), AppFractal {
                 SavesScreen(vm = savesViewModel, navHostController = navController)
             }
             composable(SCREEN_ABOUT_L_SYSTEM) {
-                println("MainActivity >> NavigationComponent() >> SCREEN_ABOUT_L_SYSTEM")
                 RulesText()
             }
         }

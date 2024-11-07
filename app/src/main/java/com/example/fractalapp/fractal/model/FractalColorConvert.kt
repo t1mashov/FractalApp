@@ -10,8 +10,6 @@ object FractalColorConvert {
     suspend fun convert(icon: String, useColors: Boolean): String {
         if (useColors) return icon
 
-        println("FractalColorConvert")
-
         val bmp = BitmapConverter.toBitmap(icon)!!
         val res = bmp.copy(Bitmap.Config.ARGB_8888, true)
 

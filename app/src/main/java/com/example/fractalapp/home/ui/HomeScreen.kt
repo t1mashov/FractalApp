@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -91,12 +93,6 @@ fun HomeScreenDisplay(
 
     val scroll = rememberScrollState()
 
-    val isThemeSwitches = remember { mutableStateOf(false) }
-    if (isThemeSwitches.value) {
-        FractalTheme.changeTheme()
-        isThemeSwitches.value = false
-    }
-
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(id = FractalTheme.Bg),
@@ -104,7 +100,7 @@ fun HomeScreenDisplay(
         contentScale = ContentScale.Crop
     )
 
-    Column(
+    Box(
         modifier = Modifier
             .padding(
                 start = 30.dp,
@@ -112,102 +108,115 @@ fun HomeScreenDisplay(
             )
             .verticalScroll(scroll)
     ) {
-        Column(
-            modifier = Modifier.padding(top = 30.dp)
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.TopEnd
         ) {
-            Text(text = "Основное",
-                color = FractalTheme.WidgetText,
-                fontSize = FractalTheme.TextTitleSize,
-                fontFamily = FontFamily(Font(R.font.montserrat_medium)))
-            Spacer(modifier = Modifier.padding(5.dp))
-            MenuWidgetWithDescription(
+            AnimatedSwitchTheme(
                 modifier = Modifier
-                    .defaultMinSize(minHeight = 130.dp),
-                text = "Создать фрактал",
-                description = "Фракталы L-системы, основаны на рекурсивных правилах",
-                imgResource = R.drawable.play,
-                firstColor = FractalTheme.CreateFractalFirst,
-                secondColor = FractalTheme.CreateFractalSecond,
-                imgTint = FractalTheme.CreateFractalTint,
-                onClick = {
-                    redirectToFractalBuilder()
-                }
+                    .padding(top = 20.dp)
+                    .size(40.dp)
             )
-            Spacer(modifier = Modifier.padding(7.dp))
-            MenuWidgetWithDescription(
-                modifier = Modifier
-                    .defaultMinSize(minHeight = 130.dp),
-                text = "Избранное",
-                description = "Сохраняйте данные понравившихся фракталов",
-                imgResource = R.drawable.star,
-                firstColor = FractalTheme.SavesFractalFirst,
-                secondColor = FractalTheme.SavesFractalSecond,
-                imgTint = FractalTheme.SavesFractalTint,
-                onClick = {
-                    redirectToSaves()
-                }
-            )
-
-            Spacer(modifier = Modifier.padding(20.dp))
-            Text(
-                text = "Информация",
-                color = FractalTheme.WidgetText,
-                fontSize = FractalTheme.TextTitleSize,
-                fontFamily = FontFamily(Font(R.font.montserrat_medium))
-            )
-            Spacer(modifier = Modifier.padding(5.dp))
-            Row(
-                modifier = Modifier
-                    .height(intrinsicSize = IntrinsicSize.Max)
+        }
+        Column {
+            Column(
+                modifier = Modifier.padding(top = 30.dp)
             ) {
-                InfoWidget(
-                    modifier = Modifier
-                        .weight(1f),
-                    text = "Правила L-системы",
-                    description = "Подробный разбор структуры L-систем с примерами",
-                    color = FractalTheme.RulesLSystemBg,
-                    onClick = {
-                        redirectToRulesText()
-                    }
-                )
-
+                Text(text = "Основное",
+                    color = FractalTheme.WidgetText,
+                    fontSize = FractalTheme.TextTitleSize,
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium)))
                 Spacer(modifier = Modifier.padding(5.dp))
-
-                InfoWidget(
-                    modifier = Modifier.weight(1f),
-                    text = "Обучение\n",
-                    description = "Гайд по приложению и особенностям формул фракталов",
-                    color = FractalTheme.TutorialBg,
+                MenuWidgetWithDescription(
+                    modifier = Modifier
+                        .defaultMinSize(minHeight = 130.dp),
+                    text = "Создать фрактал",
+                    description = "Фракталы L-системы, основаны на рекурсивных правилах",
+                    imgResource = R.drawable.play,
+                    firstColor = FractalTheme.CreateFractalFirst,
+                    secondColor = FractalTheme.CreateFractalSecond,
+                    imgTint = FractalTheme.CreateFractalTint,
                     onClick = {
-                        isThemeSwitches.value = true
+                        redirectToFractalBuilder()
                     }
                 )
-            }
+                Spacer(modifier = Modifier.padding(7.dp))
+                MenuWidgetWithDescription(
+                    modifier = Modifier
+                        .defaultMinSize(minHeight = 130.dp),
+                    text = "Избранное",
+                    description = "Сохраняйте данные понравившихся фракталов",
+                    imgResource = R.drawable.star,
+                    firstColor = FractalTheme.SavesFractalFirst,
+                    secondColor = FractalTheme.SavesFractalSecond,
+                    imgTint = FractalTheme.SavesFractalTint,
+                    onClick = {
+                        redirectToSaves()
+                    }
+                )
 
-            Spacer(modifier = Modifier.padding(20.dp))
-            Text(
-                text = "Примеры фракталов",
-                color = FractalTheme.WidgetText,
-                fontSize = FractalTheme.TextTitleSize,
-                fontFamily = FontFamily(Font(R.font.montserrat_medium))
-            )
-            Spacer(modifier = Modifier.padding(5.dp))
-
-            if (isLoading.value) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                Spacer(modifier = Modifier.padding(20.dp))
+                Text(
+                    text = "Информация",
+                    color = FractalTheme.WidgetText,
+                    fontSize = FractalTheme.TextTitleSize,
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium))
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Row(
+                    modifier = Modifier
+                        .height(intrinsicSize = IntrinsicSize.Max)
                 ) {
+                    InfoWidget(
+                        modifier = Modifier
+                            .weight(1f),
+                        text = "Правила L-системы",
+                        description = "Подробный разбор структуры L-систем с примерами",
+                        color = FractalTheme.RulesLSystemBg,
+                        onClick = {
+                            redirectToRulesText()
+                        }
+                    )
 
-                    CircularProgressIndicator(
-                        color = FractalTheme.Controllers,
-                        strokeWidth = 5.dp
+                    Spacer(modifier = Modifier.padding(5.dp))
+
+                    InfoWidget(
+                        modifier = Modifier.weight(1f),
+                        text = "Обучение\n",
+                        description = "Гайд по приложению и особенностям формул фракталов",
+                        color = FractalTheme.TutorialBg,
+                        onClick = {
+
+                        }
                     )
                 }
+
+                Spacer(modifier = Modifier.padding(20.dp))
+                Text(
+                    text = "Примеры фракталов",
+                    color = FractalTheme.WidgetText,
+                    fontSize = FractalTheme.TextTitleSize,
+                    fontFamily = FontFamily(Font(R.font.montserrat_medium))
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+
+                if (isLoading.value) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        CircularProgressIndicator(
+                            color = FractalTheme.Controllers,
+                            strokeWidth = 5.dp
+                        )
+                    }
+                }
             }
+
+            fractalListWidget()
         }
 
-        fractalListWidget()
     }
 
 }
