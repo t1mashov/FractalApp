@@ -3,6 +3,7 @@ package com.example.fractalapp.fractal.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -143,8 +144,10 @@ fun FractalScreen(
                     Image(
                         modifier = Modifier
                             .size(40.dp)
-                            .padding(5.dp)
-                            .clickable {
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
                                 scope.launch {
                                     when (scaffoldState.bottomSheetState.currentValue) {
                                         SheetValue.PartiallyExpanded -> scaffoldState.bottomSheetState.expand()
@@ -152,7 +155,8 @@ fun FractalScreen(
                                         SheetValue.Expanded -> scaffoldState.bottomSheetState.partialExpand()
                                     }
                                 }
-                            },
+                            }
+                            .padding(5.dp),
                         imageVector = ImageVector.vectorResource(R.drawable.fractal_params),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(FractalTheme.Controllers)

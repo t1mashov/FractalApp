@@ -49,7 +49,8 @@ class SavesViewModel(
     init {
         getSaves()
         fractalListViewModel.fractalStates = fractalStateList
-        FractalTheme.themeObservers["saves"] = {
+
+        FractalTheme.observeThemeChanges {
             viewModelScope.launch {
                 for (fractal in fractalStateList) {
                     fractal.icon.value = FractalColorConvert.convert(fractal.icon.value, fractal.useColors)

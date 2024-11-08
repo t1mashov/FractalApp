@@ -61,18 +61,6 @@ class FractalViewModel(
         showDialog.value = true
     }
 
-//    init {
-//        FractalTheme.themeObservers["fractalVM"] = {
-//            viewModelScope.launch {
-//                if (icon.value.isNotEmpty()) {
-//                    val icon = FractalColorConvert.convert(icon.value, useColors.value)
-//                    fractalImage.value = BitmapConverter.toBitmap(icon)
-//                    println("FractalViewModel >> init")
-//                }
-//            }
-//        }
-//    }
-
     fun loadFractal() {
         if ((id != null && id != -1) || (sid != null && sid != -1)) {
             viewModelScope.launch(Dispatchers.IO) {

@@ -77,7 +77,7 @@ fun FractalWidget(
                     onLongClick = {
                         vm.onLongPress(navController!!, fractal.id)
                     },
-                    indication = rememberRipple( color = Color.White ),
+                    indication = rememberRipple( color = FractalTheme.Ripple ),
                     interactionSource = remember { MutableInteractionSource() }
                 )
 

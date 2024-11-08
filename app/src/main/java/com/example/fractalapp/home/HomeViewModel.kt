@@ -25,8 +25,7 @@ class HomeViewModel(
 
     val samples: SnapshotStateList<Fractal> = mutableStateListOf(),
     val sampleStates: SnapshotStateList<FractalState> = mutableStateListOf(),
-    val isLoading: MutableState<Boolean> = mutableStateOf(true),
-    val isThemeChanging: MutableState<Boolean> = mutableStateOf(true)
+    val isLoading: MutableState<Boolean> = mutableStateOf(true)
 
 ): ViewModel() {
 
@@ -44,13 +43,14 @@ class HomeViewModel(
             samples.addAll(
                 repoSamples
             )
+
             sampleStates.clear()
             sampleStates.addAll(
                 repoSamples.map { FractalState.fromFractal(it) }
             )
             isLoading.value = false
         }
-        FractalTheme.themeObservers["samples"] = {
+        FractalTheme.observeThemeChanges {
             viewModelScope.launch {
                 for (sample in sampleStates) {
                     sample.icon.value = FractalColorConvert.convert(sample.icon.value, sample.useColors)

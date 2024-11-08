@@ -34,6 +34,7 @@ fun AnimatedSwitchTheme(
         context.getDrawable(R.drawable.theme_switch_day_night) as? AnimatedVectorDrawable
     }
     dayToNight?.setTint(FractalTheme.SwitchTheme.toArgb())
+
     val nightToDay = remember {
         context.getDrawable(R.drawable.theme_switch_night_day) as? AnimatedVectorDrawable
     }

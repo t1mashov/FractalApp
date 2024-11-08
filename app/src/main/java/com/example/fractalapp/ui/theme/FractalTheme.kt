@@ -1,12 +1,11 @@
 package com.example.fractalapp.ui.theme
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -15,12 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import com.example.fractalapp.R
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 object FractalTheme {
-    var isDark by mutableStateOf(true)
+    private val isDarkSubject = BehaviorSubject.createDefault(true)
+    var isDark by mutableStateOf(isDarkSubject.value ?: true)
         private set
-    val themeObservers = hashMapOf<String, (Boolean) -> Unit>()
 
     @Composable
     fun updateStatusBar() {
@@ -47,16 +47,17 @@ object FractalTheme {
     @Composable
     fun changeTheme() {
         isDark = !isDark
+        isDarkSubject.onNext(isDark)
         updateStatusBar()
+    }
 
-        val scope = rememberCoroutineScope()
-        LaunchedEffect(Unit) {
-            scope.launch {
-                for ((_, ob) in themeObservers) {
-                    ob(isDark)
-                }
+    @SuppressLint("CheckResult")
+    fun observeThemeChanges(observer: (Boolean) -> Unit) {
+        isDarkSubject
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                observer(it)
             }
-        }
     }
 
     val SwitchTheme
@@ -85,7 +86,7 @@ object FractalTheme {
     val Ripple
         get() = if (isDark) Color(0xFFFFFFFF) else Color(0xFF000000)
     val Controllers
-        get() = if (isDark) Color(0xFFCE9D4A) else Color(0xFFC78D13)
+        get() = if (isDark) Color(0xFFCE9D4A) else Color(0xFFDE9400)
     val ButtonText
         get() = if (isDark) Color(0xFF1A1A1A) else Color(0xFFE2E2E2)
 

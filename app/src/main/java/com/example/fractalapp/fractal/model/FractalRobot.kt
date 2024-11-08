@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.Log
 import androidx.compose.ui.graphics.toArgb
 import com.example.fractalapp.ui.theme.FractalTheme
+import kotlinx.coroutines.yield
 import java.util.Stack
 import kotlin.math.cos
 import kotlin.math.sin
@@ -25,6 +26,8 @@ class FractalRobot : FractalBuilder {
 
     override fun buildFractal(fr: FractalRules): Bitmap {
         result = FractalResult.SUCCESS
+
+        val startTime = System.currentTimeMillis()
 
         fr.axiom = fr.axiom.replace(" ", "").lowercase()
         val road = prepareRules(fr)
@@ -78,7 +81,10 @@ class FractalRobot : FractalBuilder {
             }
         )
 
+        val endTime = System.currentTimeMillis()
+
         Log.d("ROBOT", "size = [${bitmap.width}, ${bitmap.height}]")
+        Log.d("ROBOT", "Time = ${endTime - startTime}")
 
         return bitmap
     }

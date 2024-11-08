@@ -150,7 +150,7 @@ class MainActivity : ComponentActivity(), AppFractal {
         val bmpRes = Bitmap.createBitmap(bmp.width, bmp.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmpRes)
         val paint = Paint().apply {
-            color = Color.Black.toArgb()
+            color = FractalTheme.BgColor.toArgb()
         }
         canvas.drawRect(0f, 0f, bmp.width.toFloat(), bmp.height.toFloat(), paint)
         canvas.drawBitmap(bmp, 0f, 0f, null)
