@@ -61,6 +61,9 @@ fun HomeScreen(
         redirectToRulesText = {
             vm.redirectToRulesText(navController!!)
         },
+        redirectToTutorial = {
+            vm.redirectToTutorial(navController!!)
+        },
         fractalListWidget = {
             FractalListWidget(
                 vm = vm.fractalListViewModel,
@@ -88,6 +91,7 @@ fun HomeScreenDisplay(
     redirectToFractalBuilder: () -> Unit = {},
     redirectToSaves: () -> Unit = {},
     redirectToRulesText: () -> Unit = {},
+    redirectToTutorial: () -> Unit = {},
     fractalListWidget: @Composable () -> Unit = {}
 ) {
 
@@ -186,7 +190,7 @@ fun HomeScreenDisplay(
                         description = "Гайд по приложению и особенностям формул фракталов",
                         color = FractalTheme.TutorialBg,
                         onClick = {
-
+                            redirectToTutorial()
                         }
                     )
                 }

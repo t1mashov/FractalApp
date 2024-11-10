@@ -37,6 +37,7 @@ import com.example.fractalapp.home.ui.HomeScreen
 import com.example.fractalapp.rulestext.RulesText
 import com.example.fractalapp.saves.SavesViewModel
 import com.example.fractalapp.saves.ui.SavesScreen
+import com.example.fractalapp.tutorial.ui.TutorialScreen
 import com.example.fractalapp.ui.theme.FractalAppTheme
 import com.example.fractalapp.ui.theme.FractalTheme
 import java.io.IOException
@@ -228,6 +229,9 @@ class MainActivity : ComponentActivity(), AppFractal {
             }
             composable(SCREEN_ABOUT_L_SYSTEM) {
                 RulesText()
+            }
+            composable(SCREEN_TUTORIAL) {
+                TutorialScreen()
             }
         }
     }

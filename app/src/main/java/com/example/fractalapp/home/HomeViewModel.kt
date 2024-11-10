@@ -74,6 +74,11 @@ class HomeViewModel(
             navController.navigate(SCREEN_SAVED)
         }
     }
+    fun redirectToTutorial(navController: NavController) {
+        viewModelScope.launch {
+            navController.navigate(SCREEN_TUTORIAL)
+        }
+    }
 
 
 }
